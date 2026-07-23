@@ -1,5 +1,7 @@
 # Switch Emulator Mod Database
 
+> **This is a fork.** All the hard work of building and maintaining this mod database belongs to the original author, **Odukoya Abdullahi Ademola** ([@ADEMOLA200](https://github.com/ADEMOLA200)), from his repository [ADEMOLA200/Switch-Emulator-Mod-Database](https://github.com/ADEMOLA200/Switch-Emulator-Mod-Database). This fork only reorganizes the existing folder structure; full credit for the mod collection itself goes to him.
+
 Switch Emulator Mod Database is a collection of cheats, FPS, and graphics mods for various Nintendo Switch games running on the Yuzu/Ryujinx/Sudachi/Citron..etc emulator. This repository brings together multiple modding projects, allowing you to enhance your gaming experience with improved visuals and gameplay tweaks.
 
 ## Features
