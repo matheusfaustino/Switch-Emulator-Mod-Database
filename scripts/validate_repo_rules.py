@@ -2,12 +2,16 @@
 """
 Checks this repo's game folders against the <Game>/<TitleID>/<files> convention.
 
-ERRORS (exit code 1) are unambiguous rule violations that standardize_repo.py
-can fix: colons in folder names, region tags, loose title-ID files not
-wrapped in a <TitleID>/ folder, "..." placeholder files, and non-ID immediate
-subfolders of a game folder. Un-integrated root-level mod archives (.zip/
-.rar/.7z) are ignored by default -- there's currently a backlog of them --
-pass --check-archives to include that check.
+ERRORS (exit code 1) are unambiguous rule violations. Most are mechanically
+fixable by standardize_repo.py: colons in folder names, region tags, loose
+title-ID files not wrapped in a <TitleID>/ folder, and "..." placeholder
+files. Non-ID immediate subfolders of a game folder are also errors here,
+but picking which <TitleID>/ folder an orphan subfolder belongs to is a
+judgment call (see the "don't flatten titles/contents wrappers" note in
+project memory) -- standardize_repo.py only flags these for manual review,
+it does not move them. Un-integrated root-level mod archives (.zip/.rar/.7z)
+are ignored by default -- there's currently a backlog of them -- pass
+--check-archives to include that check.
 
 WARNINGS are informational / judgment calls that need a human (mirrors the
 "open flags" from the standardization effort): folders with no title ID

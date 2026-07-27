@@ -14,4 +14,4 @@ jobs:
           python-version: "3.13"
 
       - name: Run validate_repo_rules.py
-        run: python3 scripts/validate_repo_rules.py --ignore "Dragon Quest XI S Demo"
+        run: python3 scripts/validate_repo_rules.py
