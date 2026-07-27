@@ -16,9 +16,12 @@ of redoing them by hand:
   5. delete literal "..." placeholder files
 
 Does NOT attempt fuzzy/nickname duplicate-folder merging (e.g. "mk8" ->
-"Mario Kart 8 Deluxe") or title-ID lookups for folders with no ID anywhere
-locally -- those are judgment calls, left for a human (see validate_repo_rules.py
-to find what's left unresolved).
+"Mario Kart 8 Deluxe"), title-ID lookups for folders with no ID anywhere
+locally, or moving non-title-ID subfolders sitting directly under a game
+folder (e.g. a stray "exefs_patches/") -- those are judgment calls, left for
+a human. The subfolder case is flagged under "needs manual review" below;
+the rest show up as validate_repo_rules.py warnings (see that script to find
+everything left unresolved).
 
 Never touches NX-60FPS-RES-GFX-Cheats/, Titles/, Mods/, Saves/ -- these are
 vendored/aggregate data trees, not per-game folders, and README.md has relative
@@ -237,6 +240,16 @@ def plan_wrap_loose_id_files(root, actions, warnings):
             ))
 
 
+def plan_flag_non_id_subfolders(root, actions, warnings):
+    for game_dir in top_level_game_dirs(root):
+        for child in sorted(game_dir.iterdir()):
+            if child.is_dir() and not TITLE_ID_RE.match(child.name):
+                warnings.append(
+                    f"[needs manual pass] {child.relative_to(root)}: non-title-ID subfolder directly "
+                    f"under a game folder -- which <TitleID>/ it belongs to must be decided by hand"
+                )
+
+
 def plan_delete_placeholders(root, actions, warnings):
     for top in top_level_game_dirs(root):
         for dirpath, _dirnames, filenames in os.walk(top):
@@ -255,6 +268,7 @@ STEPS = [
     ("colons", "replace ':' in folder names", plan_replace_colons),
     ("regions", "strip (USA)/(EUR)/(JPN) region tags", plan_strip_region_tags),
     ("wrap", "wrap loose title-ID files into <TitleID>/ folders", plan_wrap_loose_id_files),
+    ("subfolders", "flag non-title-ID subfolders for manual review", plan_flag_non_id_subfolders),
     ("placeholders", "delete '...' placeholder files", plan_delete_placeholders),
 ]
 
