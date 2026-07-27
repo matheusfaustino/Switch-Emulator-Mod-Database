@@ -1,0 +1,7 @@
+[project]
+name = "switch-emulator-mod-database"
+version = "0.1.0"
+description = "Maintenance scripts for standardizing and validating the mod database's folder layout"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
