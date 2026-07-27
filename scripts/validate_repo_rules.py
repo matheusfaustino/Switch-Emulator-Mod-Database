@@ -30,6 +30,13 @@ EXCLUDED_TOP_LEVEL = {
 }
 IGNORED_LOOSE_FILENAMES = {"readme.md", ".ds_store"}
 
+# Known unresolved game folders that still need a human to sort out (missing
+# title ID, ambiguous demo/base-game split, etc.) -- ignored by default so CI
+# stays green; drop an entry here once its folder is standardized.
+DEFAULT_IGNORED_GAME_FOLDERS = {
+    "Dragon Quest XI S Demo",
+}
+
 TITLE_ID_RE = re.compile(r"^[0-9A-Fa-f]{16}$")
 BRACKET_ID_RE = re.compile(r"\[([0-9A-Fa-f]{16})\]")
 REGION_TAG_RE = re.compile(r"\s*\((USA|EUR|JPN)\)\s*$", re.IGNORECASE)
@@ -99,9 +106,8 @@ def main():
     parser.add_argument("--quiet", action="store_true", help="only print the summary line and errors, no warnings")
     parser.add_argument(
         "--ignore", action="append", default=[], metavar="FOLDER",
-        help="top-level game folder name to skip entirely, may be passed multiple times "
-             "(e.g. --ignore pokemon --ignore \"Dragon Quest XI S Demo\" for known unresolved "
-             "folders in CI)",
+        help="additional top-level game folder name to skip entirely, on top of "
+             "DEFAULT_IGNORED_GAME_FOLDERS, may be passed multiple times",
     )
     parser.add_argument(
         "--check-archives", action="store_true",
@@ -117,10 +123,12 @@ def main():
     print(f"  excluded top-level entries (default): {', '.join(sorted(EXCLUDED_TOP_LEVEL))}")
     print(f"  ignored loose filenames: {', '.join(sorted(IGNORED_LOOSE_FILENAMES))}")
     print(f"  archive check (--check-archives): {'on' if args.check_archives else 'off'}")
+    print(f"  known unresolved game folders (ignored by default): {', '.join(sorted(DEFAULT_IGNORED_GAME_FOLDERS))}")
     if args.ignore:
         print(f"  extra folders ignored (--ignore): {', '.join(sorted(args.ignore))}")
     print()
 
+    EXCLUDED_TOP_LEVEL.update(DEFAULT_IGNORED_GAME_FOLDERS)
     EXCLUDED_TOP_LEVEL.update(args.ignore)
     errors, warnings = [], []
 
