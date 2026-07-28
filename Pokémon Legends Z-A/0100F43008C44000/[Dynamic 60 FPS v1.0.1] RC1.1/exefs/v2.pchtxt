@@ -1,0 +1,16 @@
+@nsobid-DF7A3960C74C3A4803F826C5871532523AA9CF2A
+
+# Pokémon Legends: Z-A [0100F43008C44000] vx.x.x - 60 FPS Dynamic
+
+@flag print_values
+@flag offset_shift 0x100
+
+// 60 FPS Dynamic
+
+@enabled
+00197b40 2B008052
+@stop
+
+@Fl4sh_#9174
+https://github.com/Fl4sh9174
+https://Ko-fi.com/Fl4sh9174
